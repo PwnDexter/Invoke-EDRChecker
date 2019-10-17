@@ -42,7 +42,7 @@ function edr-checker
 				'redcloak',
 				'sentinel',
 				'splunk',
-				'sysmon',
+				'sysmon'
 			 )
 	
 	$proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches
