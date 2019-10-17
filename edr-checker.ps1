@@ -23,14 +23,14 @@ function edr-checker
 				'carbon',
 				'cb',
 				'crowd',
-				'csagent'
+				'csagent',
 				'csfalcon',
 				'csshell',
 				'cylance',
 				'cyoptics',
 				'cyupdate',
-				'defendpoint'
-				'PGEPOService'
+				'defendpoint',
+				'PGEPOService',
 				'PGSystemTray',
 				'PrivilegeGuard',
 				'sentinel',
