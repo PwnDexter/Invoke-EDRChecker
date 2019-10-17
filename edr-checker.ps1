@@ -38,7 +38,7 @@ function edr-checker
 				'sysmon',
 			 )
 	
-	$proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches # | % { $_.Matches } | % { $_.Value }
+	$proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches
 
 	echo $proc
 }
