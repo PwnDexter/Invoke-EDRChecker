@@ -18,3 +18,4 @@ If processes not found:
 ## Roadmap
 - [ ] - Add more EDR Products
 - [ ] - Test across more Windows and .NET versions
+- [ ] - Clean up output
