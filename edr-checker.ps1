@@ -41,7 +41,9 @@ function edr-checker
              'redcloak',
              'sentinel',
              'splunk',
-             'sysmon'#,
+             'sysmon',
+	     'tanium',
+	     'TPython'#,
              #'svchost' #For testing output
             )
 	
