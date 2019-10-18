@@ -44,7 +44,7 @@ function edr-checker
              'sysmon'#,
              #'svchost' #For testing output
             )
-	    
-	if ($proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches)	{echo $proc}
-	else {echo ("None found, go wild!")}
+	
+	if ($proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches)	{Write-Host -Separator `r`n -f Red $proc }
+    else {Write-Host -f Green ("None found, go wild!")}
 }
