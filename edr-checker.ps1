@@ -19,33 +19,32 @@ PS C:\> edr-checker
 
 function edr-checker
 {
-	$edr = @(
-				'authtap',
-				'carbon',
-				'cb',
-				'crowd',
-				'csagent',
-				'csfalcon',
-				'csshell',
-				'cyclorama',
-				'cylance',
-				'cyoptics',
-				'cyupdate',
-				'defendpoint',
-				'groundling',
-				'inspector',
-				'lacuna',
-				'PGEPOService',
-				'PGSystemTray',
-				'PrivilegeGuard',
-				'procwall',
-				'redcloak',
-				'sentinel',
-				'splunk',
-				'sysmon'
-			 )
-	
-	$proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches
-
-	echo $proc
+	$edr = @('authtap',
+             'carbon',
+             'cb',
+             'crowd',
+             'csagent',
+             'csfalcon',
+             'csshell',
+             'cyclorama',
+             'cylance',
+             'cyoptics',
+             'cyupdate',
+             'defendpoint',
+             'groundling',
+             'inspector',
+             'lacuna',
+             'PGEPOService',
+             'PGSystemTray',
+             'PrivilegeGuard',
+             'procwall',
+             'redcloak',
+             'sentinel',
+             'splunk',
+             'sysmon'#,
+             #'svchost' #For testing output
+            )
+	    
+	if ($proc = get-process | select ProcessName | Select-String -Pattern $edr -AllMatches)	{echo $proc}
+	else {echo ("None found, go wild!")}
 }
