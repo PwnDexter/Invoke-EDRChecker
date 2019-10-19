@@ -15,6 +15,8 @@ If processes and drivers are hidden and still found:
 
 ![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/hidden-edr-check-adm.png)
 
+![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/hidden-edr-check-adm-bonus.png)
+
 ## Roadmap
 - [ ] - Add more EDR Products
 - [ ] - Refine beta function for registry checking
