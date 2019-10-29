@@ -46,6 +46,7 @@ function edr-checker
              'sysmon',
              'tanium',
              'TPython',
+	     'windowssensor',
              'Wireshark'
             )
 
