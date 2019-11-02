@@ -22,3 +22,5 @@ If processes and drivers are hidden and still found:
 - [ ] - Refine beta function for registry checking
 - [ ] - Test across more Windows and .NET versions
 - [ ] - Clean up output
+- [ ] - Get currently loaded DLL's in your current process
+- [ ] - Add remote host query capability
