@@ -19,8 +19,9 @@ If processes and drivers are hidden and still found:
 
 ## Roadmap
 - [ ] - Add more EDR Products
-- [ ] - Refine beta function for registry checking
+- [x] - Refine beta function for registry checking
+  - [x] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
 - [ ] - Clean up output
-- [ ] - Get currently loaded DLL's in your current process
+- [x] - Get currently loaded DLL's in your current process
 - [ ] - Add remote host query capability
