@@ -1,3 +1,38 @@
+$edr_list = @('authtap',
+              'avecto',
+              'carbon',
+              'cb',
+              'crowd',
+              'csagent',
+              'csfalcon',
+              'csshell',
+              'cyclorama',
+              'cylance',
+              'cyoptics',
+              'cyupdate',
+              'defendpoint',
+              'groundling',
+              'inspector',
+              'lacuna',
+              'MSASCuiL',
+              'MsMpEng',
+              'NisSrv',
+              'PGEPOService',
+              'PGSystemTray',
+              'PrivilegeGuard',
+              'procwall',
+              'redcloak',
+              'SecurityHealthService',
+              'sentinel',
+              'splunk',
+              'sysinternal',
+              'sysmon',
+              'tanium',
+              'TPython',
+	      'windowssensor',
+              'Wireshark'
+             )
+
 <#
 .SYNOPSIS
 
@@ -10,125 +45,60 @@ Optional Dependencies: None
 
 .DESCRIPTION
 
-Enumerates the host by querying processes, process metadata, known install paths and the registry, then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
+Enumerates the host by querying processes, process metadata, dlls loaded into your current process, known install paths, the registry and running drivers then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
 
 .EXAMPLE
-PS C:\> edr-checker
-PS C:\> edr-checker-beta
+PS C:\> Invoke-EDRChecker
 
 #>
 
-function edr-checker
+function Invoke-EDRChecker
 {
-	$edr = @('authtap',
-             'carbon',
-             'cb',
-             'crowd',
-             'csagent',
-             'csfalcon',
-             'csshell',
-             'cyclorama',
-             'cylance',
-             'cyoptics',
-             'cyupdate',
-             'defendpoint',
-             'groundling',
-             'inspector',
-             'lacuna',
-             'PGEPOService',
-             'PGSystemTray',
-             'PrivilegeGuard',
-             'procwall',
-             'redcloak',
-             'sentinel',
-             'splunk',
-             'sysinternal',
-             'sysmon',
-             'tanium',
-             'TPython',
-	     'windowssensor',
-             'Wireshark'
-            )
+	$edr = $edr_list
 
+    Write-Output ""
+    Write-Output "[!] Checking current user integrity"
     $user = [Security.Principal.WindowsIdentity]::GetCurrent();
     $isadm = (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-    if ($isadm | Select-String -Pattern "True") {Write-Host -f green "Woop running as admin, see all the things" }
-    else { Write-Host -f yellow "Not running as admin, visibility may be limited" }
+    if ($isadm | Select-String -Pattern "True") {Write-Output "[+] Running as admin, all checks will be performed" }
+    else { Write-Output "[-] Not running as admin, process metadata, registry and drivers will not be checked" }
     
-    Write-Host -f white "Checking running processes"
-    if ($proc = get-process | select-object ProcessName,Name,Path,Company,Product,Description | Select-String -Pattern $edr) {Write-Host -Separator `r`n -f yellow $proc }
-    else {Write-Host -f Green ("No suspicious processes found, go wild!")}
+    Write-Output ""
+    Write-Output "[!] Checking running processes"
+    if ($proc = Get-Process | select-object ProcessName,Name,Path,Company,Product,Description | Select-String -Pattern $edr) {Write-Output "[-] $proc" }
+    else {Write-Output "[+] No suspicious processes found"}
 
-    Write-Host -f white "Checking Program Files"
-    if ($prog = Get-ChildItem -Path 'C:\Program Files\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog }
-    else {Write-Host -f Green ("Nothing in Program Files, go wild!")}
+    Write-Output ""
+    Write-Output "[!] Checking loaded DLLs in your current process"
+    if ($procid = Get-Process -Id $pid -Module | Select-Object ModuleName,FileName | Select-String -Pattern $edr) {Write-Output "[-] $procid" }
+    else {Write-Output "[+] No suspicious DLLs loaded"}
+
+    Write-Output ""
+    Write-Output "[!] Checking Program Files"
+    if ($prog = Get-ChildItem -Path 'C:\Program Files\*' | Select-Object Name | Select-String -Pattern $edr -AllMatches) {Write-Output "[-] $prog" }
+    else {Write-Output "[+] Nothing found in Program Files"}
     
-    Write-Host -f white "Checking Program Files x86"
-    if ($prog86 = Get-ChildItem -Path 'C:\Program Files (x86)\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog86 }
-    else {Write-Host -f Green ("Nothing in Program Files x86, go wild!")}
+    Write-Output ""
+    Write-Output "[!] Checking Program Files x86"
+    if ($prog86 = Get-ChildItem -Path 'C:\Program Files (x86)\*' | Select-Object Name | Select-String -Pattern $edr -AllMatches) {Write-Output "[-] $prog86" }
+    else {Write-Output "[+] Nothing found in Program Files x86"}
 
-    Write-Host -f white "Checking Program Data"
-    if ($prog86 = Get-ChildItem -Path 'C:\ProgramData\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog86 }
-    else {Write-Host -f Green ("Nothing in Program Data, go wild!")}
+    Write-Output ""
+    Write-Output "[!] Checking Program Data"
+    if ($prog86 = Get-ChildItem -Path 'C:\ProgramData\*' | Select-Object Name | Select-String -Pattern $edr -AllMatches) {Write-Output "[-] $prog86" }
+    else {Write-Output "[+] Nothing found in Program Data"}
 
-}
+    if ($isadm | Select-String -Pattern "True")
+    {
+        Write-Output ""
+        Write-Output "[!] Checking the registry"
+        if ($reg = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\*' | Select-Object PSChildName,PSPath,DisplayName,ImagePath,Description | Select-String -SimpleMatch $edr -AllMatches) {Write-Output "[-] $reg" }
+        else {Write-Output "[+] Nothing found in Registry"}
 
-function edr-checker-beta
-{
-	$edr = @('authtap',
-             'carbon',
-             'cb',
-             'crowd',
-             'csagent',
-             'csfalcon',
-             'csshell',
-             'cyclorama',
-             'cylance',
-             'cyoptics',
-             'cyupdate',
-             'defendpoint',
-             'groundling',
-             'inspector',
-             'lacuna',
-             'PGEPOService',
-             'PGSystemTray',
-             'PrivilegeGuard',
-             'procwall',
-             'redcloak',
-             'sentinel',
-             'splunk',
-             'sysinternal',
-             'sysmon',
-             'tanium',
-             'TPython',
-             'Wireshark'
-             #'conhost' #For testing output
-             #'notepad' #For testing output
-            )
-
-    $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-    $isadm = (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-    if ($isadm | Select-String -Pattern "True") {Write-Host -f green "Woop running as admin, see all the things" }
-    else { Write-Host -f yellow "Not running as admin, visibility may be limited" }
-    
-    Write-Host -f white "Checking running processes"
-    if ($proc = get-process | select-object ProcessName,Name,Path,Company,Product,Description | Select-String -Pattern $edr) {Write-Host -Separator `r`n -f yellow $proc }
-    else {Write-Host -f Green ("No suspicious processes found, go wild!")}
-
-    Write-Host -f white "Checking Program Files"
-    if ($prog = Get-ChildItem -Path 'C:\Program Files\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog }
-    else {Write-Host -f Green ("Nothing in Program Files, go wild!")}
-    
-    Write-Host -f white "Checking Program Files x86"
-    if ($prog86 = Get-ChildItem -Path 'C:\Program Files (x86)\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog86 }
-    else {Write-Host -f Green ("Nothing in Program Files x86, go wild!")}
-
-    Write-Host -f white "Checking Program Data"
-    if ($prog86 = Get-ChildItem -Path 'C:\ProgramData\*' | Select Name | Select-String -Pattern $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $prog86 }
-    else {Write-Host -f Green ("Nothing in Program Data, go wild!")}
-    
-    Write-Host -f white "Checking the registry"
-    if ($reg = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\*' | Select Name,DisplayName,ImagePath,Description | Select-String -SimpleMatch $edr -AllMatches) {Write-Host -Separator `r`n -f yellow $reg }
-    else {Write-Host -f Green ("Nothing in Registry, go wild!")}
+        Write-Output ""
+        Write-Output "[!] Checking the drivers"
+        if ($drv = fltmc instances | Select-String -SimpleMatch $edr -AllMatches) {Write-Output "[-] $drv" }
+        else {Write-Output "[+] Nothing suspicious drivers found"}
+    }
 
 }
