@@ -1,4 +1,5 @@
-$edr_list = @('authtap',
+$edr_list = @('DEEZ NUTS',
+	      'authtap',
               'avecto',
               'carbon',
               'cb',
