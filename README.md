@@ -1,28 +1,32 @@
 # edr-checker
-Enumerates the host and checks for the presence of known defensive products such as AV's, EDR's and logging tools. The script will check running processes, process metadata, common install directories and if you use the beta function the registry.
+The script will check running processes, process metadata, Dlls loaded into your current process, common install directories, the registry and running drivers for the presence of known defensive products such as AV's, EDR's and logging tools.
 
-This script can be loaded into your C2 server as well for example in PoshC2, place the script into your modules directory, load the module then run it.
+This script can be loaded into your C2 server as well for example in PoshC2, place the script into your modules directory, load the module then run it. Note: this will be pushed and intregrated into PoshC2 soon.
 
-I will continue to add and improve the list when time permits, better formatting to come as well. At present you must run edr-checker-beta to include registry checks, this can return false positives on top of the legit positives so be sure to check.
+I will continue to add and improve the list when time permits. At present you must be admin include registry checks, I plan to add a -Force flag for this. I will also be porting this to C# and adding in remote host query capability.
 
-## Example Output below is no longer up to date due to new additions, will fix soon
-## Example Output - Note: This has only been tested on Windows 10, more testing to come.
+Find me on twitter @PwnDexter for any issues or questions!
 
-If processes found (Beta):
-
-![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/edr-beta-exch-adm.png)
+### Example Output - Note: This has only been tested on Windows 10, more testing to come.
 
 If processes and drivers are hidden and still found:
 
-![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/hidden-edr-check-adm.png)
+![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/edr-new-adm.png)
 
-![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/hidden-edr-check-adm-bonus.png)
+If running as non-admin to show visibility difference:
+
+![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/edr-new-noadm.png)
+
+Using EDR-Checker with PoshC2:
+
+![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/edr-poshc2.png)
 
 ## Roadmap
 - [ ] - Add more EDR Products
 - [x] - Refine beta function for registry checking
   - [ ] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
-- [ ] - Clean up output
+- [ ] - Port to c#
+- [x] - Clean up output
 - [x] - Get currently loaded DLL's in your current process
 - [ ] - Add remote host query capability
