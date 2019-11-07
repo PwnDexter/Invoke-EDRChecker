@@ -107,7 +107,7 @@ function Invoke-EDRChecker
         Write-Output "[!] Checking the drivers"
         if ($drv = fltmc instances | Select-String -Pattern $edr -AllMatches) 
         {ForEach ($p in $drv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
-        else {Write-Output "[+] Nothing suspicious drivers found"}
+        else {Write-Output "[+] No suspicious drivers found"}
     }
 
 }
