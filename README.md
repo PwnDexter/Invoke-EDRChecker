@@ -29,5 +29,5 @@ Using EDR-Checker with PoshC2:
 - [ ] - Port to c#
 - [x] - Clean up output
 - [x] - Get currently loaded DLL's in your current process
-  - [ ] - Get dll metadata of currently loaded dlls
+  - [x] - Get dll metadata of currently loaded dlls
 - [ ] - Add remote host query capability
