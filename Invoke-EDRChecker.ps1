@@ -189,7 +189,7 @@ function Invoke-EDRCheckerRemote
     Write-Output ""
     Write-Output "[!] Performing EDR Checks against $ComputerName, remote checks are limited to process listing, common install directories and installed services"
 
-    # Added in connection and authentication check to the target host
+    # TODO: Add in connection and authentication check to the target host
 
     Write-Output ""
     Write-Output "[!] Checking running processes of $ComputerName"
