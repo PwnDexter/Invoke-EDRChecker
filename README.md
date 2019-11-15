@@ -24,11 +24,12 @@ Using EDR-Checker with PoshC2:
 ## Roadmap
 - [ ] - Add more EDR Products - never ending
 - [x] - Refine beta function for registry checking
-  - [ ] - Add in force reg check if not running as admin
+  - [x] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
 - [ ] - Port to c#
 - [x] - Clean up output
 - [x] - Get currently loaded DLL's in your current process
   - [x] - Get dll metadata of currently loaded dlls
-- [ ] - Add remote host query capability
+- [x] - Add remote host query capability
+  - [ ] - Add connectivity and privilege checks before perform edr checks
 - [x] - Add installed services checks
