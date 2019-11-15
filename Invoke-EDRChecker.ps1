@@ -94,7 +94,7 @@ function Invoke-EDRChecker
     if ($isadm | Select-String -Pattern "True") {Write-Output "[+] Running as admin, all checks will be performed"}
     else {Write-Output "[-] Not running as admin, process metadata, registry and drivers will not be checked"}
 
-    if (($isadm | Select-String -Pattern "False") -or ($ForceReg -eq $true))
+    if (($isadm | Select-String -Pattern "False") -and ($ForceReg -eq $false))
     {
     Write-Output "[-] Use the -ForceReg flag to force registry checks when not running as admin"
     }
