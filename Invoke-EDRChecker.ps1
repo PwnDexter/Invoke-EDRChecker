@@ -198,12 +198,6 @@ function Invoke-EDRCheckerRemote
     else {Write-Output "[+] No suspicious processes found"}
 
     Write-Output ""
-    Write-Output "[!] Checking running services of $ComputerName"
-    if ($serv = Get-Service -ComputerName $ComputerName | Select-Object Name,DisplayName,ServiceName | Select-String -Pattern $edr -AllMatches)
-    {ForEach ($p in $serv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
-    else {Write-Output "[+] No suspicious services found"}
-
-    Write-Output ""
     Write-Output "[!] Checking Program Files on $ComputerName"
     if ($prog = Get-ChildItem -Path "\\$ComputerName\\c$\\Program Files\\*" | Select-Object Name | Select-String -Pattern $edr -AllMatches)
     {ForEach ($p in $prog -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
