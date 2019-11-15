@@ -22,7 +22,7 @@ Using EDR-Checker with PoshC2:
 ![](https://raw.githubusercontent.com/PwnDexter/edr-checker/master/Images/edr-poshc2.png)
 
 ## Roadmap
-- [ ] - Add more EDR Products
+- [ ] - Add more EDR Products - never ending
 - [x] - Refine beta function for registry checking
   - [ ] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
@@ -31,3 +31,4 @@ Using EDR-Checker with PoshC2:
 - [x] - Get currently loaded DLL's in your current process
   - [x] - Get dll metadata of currently loaded dlls
 - [ ] - Add remote host query capability
+- [x] - Add installed services checks
