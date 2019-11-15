@@ -1,4 +1,5 @@
 $edr_list = @('authtap',
+              'avast',
               'avecto',
               'carbon',
               'cb.exe',
@@ -11,19 +12,27 @@ $edr_list = @('authtap',
               'cyoptics',
               'cyupdate',
               'defendpoint',
+              'defender',
               'eectrl',
+              'endgame',
+              'fireeye',
               'groundling',
               'inspector',
+              'kaspersky',
               'lacuna',
+              'logrhythm',
+              'mcafee',
               'morphisec',
               'msascuil',
               'msmpeng',
               'nissrv',
+              'osquery',
               'pgeposervice',
               'pgsystemtray',
               'privilegeguard',
               'procwall',
               'protectorservice'
+              'qradar',
               'redcloak',
               'securityhealthservice',
               'semlaunchsvc'
@@ -44,6 +53,7 @@ $edr_list = @('authtap',
               'sysmon',
               'tanium',
               'tpython',
+              'wincollect',
               'windowssensor',
               'wireshark'
              )
@@ -60,7 +70,7 @@ Optional Dependencies: None
 
 .DESCRIPTION
 
-Enumerates the host by querying processes, process metadata, dlls loaded into your current process, known install paths, the registry and running drivers then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
+Enumerates the host by querying processes, process metadata, dlls loaded into your current process and each dlls metadata, known install paths, installed services, the registry and running drivers then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
 
 .EXAMPLE
 PS C:\> Invoke-EDRChecker
@@ -72,6 +82,7 @@ function Invoke-EDRChecker
     $edr = $edr_list
     
     Write-Output ""
+    Write-Output "[!] Performing EDR Checks"
     Write-Output "[!] Checking current user integrity"
     $user = [Security.Principal.WindowsIdentity]::GetCurrent();
     $isadm = (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
@@ -109,6 +120,12 @@ function Invoke-EDRChecker
     {ForEach ($p in $progd -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
     else {Write-Output "[+] Nothing found in Program Data"}
 
+    Write-Output ""
+    Write-Output "[!] Checking installed services"
+    if ($serv = Get-Service | Select-Object Name,DisplayName,ServiceName | Select-String -Pattern $edr -AllMatches)
+    {ForEach ($p in $serv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
+    else {Write-Output "[+] No suspicious services found"}
+
     if ($isadm | Select-String -Pattern "True")
     {
         Write-Output ""
@@ -123,5 +140,9 @@ function Invoke-EDRChecker
         {ForEach ($p in $drv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
         else {Write-Output "[+] No suspicious drivers found"}
     }
+
+    Write-Output ""
+    Write-Output "[!] EDR Checks Complete"
+    Write-Output ""
 
 }
