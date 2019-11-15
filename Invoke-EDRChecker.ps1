@@ -61,7 +61,6 @@ $edr_list = @('authtap',
 
 <#
 .SYNOPSIS
-
 Enumerates the host and checks it for defensive products.
 
 Author: Ross Bingham (@PwnDexter)
@@ -70,11 +69,9 @@ Required Dependencies: None
 Optional Dependencies: None
 
 .DESCRIPTION
-
 Enumerates the host by querying processes, process metadata, dlls loaded into your current process and each dlls metadata, known install paths, installed services, the registry and running drivers then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
 
 .PARAMETER ForceReg
-
 Forces registry checks when not running as admin.
 
 .EXAMPLE
@@ -165,7 +162,6 @@ function Invoke-EDRChecker
 
 <#
 .SYNOPSIS
-
 Enumerates the remote host and checks it for defensive products.
 
 Author: Ross Bingham (@PwnDexter)
@@ -174,11 +170,9 @@ Required Dependencies: None
 Optional Dependencies: None
 
 .DESCRIPTION
-
 Enumerates the host by checking process listing, known install paths and installed services then checks the output against a list of known defensive products such as AV's, EDR's and logging tools.
 
 .PARAMETER ComputerName
-
 Specifies the computername to perform the remote checks against.
 
 .EXAMPLE
