@@ -80,6 +80,9 @@ PS C:\> Invoke-EDRChecker
 
 function Invoke-EDRChecker
 {
+
+    param([Parameter(ValueFromPipeline = $false)] [switch] $ForceReg)
+
     $edr = $edr_list
     
     Write-Output ""
@@ -89,6 +92,11 @@ function Invoke-EDRChecker
     $isadm = (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
     if ($isadm | Select-String -Pattern "True") {Write-Output "[+] Running as admin, all checks will be performed"}
     else {Write-Output "[-] Not running as admin, process metadata, registry and drivers will not be checked"}
+
+    if (($isadm | Select-String -Pattern "False") -or ($ForceReg -eq $true))
+    {
+    Write-Output "[-] Use the -ForceReg flag to force registry checks when not running as admin"
+    }
     
     Write-Output ""
     Write-Output "[!] Checking running processes"
@@ -127,14 +135,17 @@ function Invoke-EDRChecker
     {ForEach ($p in $serv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
     else {Write-Output "[+] No suspicious services found"}
 
-    if ($isadm | Select-String -Pattern "True")
+    if (($isadm | Select-String -Pattern "True") -or ($ForceReg -eq $true))
     {
         Write-Output ""
         Write-Output "[!] Checking the registry"
         if ($reg = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\*' | Select-Object PSChildName,PSPath,DisplayName,ImagePath,Description | Select-String -Pattern $edr -AllMatches) 
         {ForEach ($p in $reg -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
         else {Write-Output "[+] Nothing found in Registry"}
+    }
 
+    if ($isadm | Select-String -Pattern "True")
+    {
         Write-Output ""
         Write-Output "[!] Checking the drivers"
         if ($drv = fltmc instances | Select-String -Pattern $edr -AllMatches) 
