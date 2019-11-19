@@ -1,5 +1,5 @@
 # EDR-Checker
-The script will check running processes, process metadata, Dlls loaded into your current process and the each DLLs metadata, common install directories, the registry and running drivers for the presence of known defensive products such as AV's, EDR's and logging tools.
+The script will check running processes, process metadata, Dlls loaded into your current process and the each DLLs metadata, common install directories, installed services, the registry and running drivers for the presence of known defensive products such as AV's, EDR's and logging tools.
 
 This script can be loaded into your C2 server as well for example in PoshC2, place the script into your modules directory, load the module then run it. Note: this will be pushed and intregrated into PoshC2 soon.
 
