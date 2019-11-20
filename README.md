@@ -17,22 +17,24 @@ git clone https://github.com/PwnDexter/Invoke-EDRChecker.git
 
 ## Usage
 
-Run the script against the local host
+Once the script has been loaded into your host or C2 of choice, you can use the following commands:
+
+Run the script against the local host and perform checks based on current user integrity:
 ```
 Invoke-EDRChecker
 ```
 
-Run the script and force registry checks to be performed (for use when you are not running as admin)
+Run the script and force registry checks to be performed (for use when you are not running as admin):
 ```
 Invoke-EDRChecker -ForceReg
 ```
 
-Run the script against a remote host
+Run the script against a remote host:
 ```
 Invoke-EDRChecker -Remote <hostname>
 ```
 
-### Example Output - Note: These screenshots need updated and this has only been tested on Windows 10, more testing to come.
+## Example Output - Note: These screenshots need updated and this has only been tested on Windows 10, more testing to come.
 
 If processes and drivers are hidden and still found:
 
@@ -58,3 +60,4 @@ Using EDR-Checker with PoshC2:
 - [x] - Add remote host query capability
   - [ ] - Add connectivity and privilege checks before perform edr checks
 - [x] - Add installed services checks
+- [ ] - Port to python for unix/macos support
