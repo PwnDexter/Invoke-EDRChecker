@@ -26,12 +26,18 @@ Invoke-EDRChecker
 
 Run the script and force registry checks to be performed (for use when you are not running as admin):
 ```
-Invoke-EDRChecker -ForceReg
+Invoke-EDRChecker -Force
 ```
 
-Run the script against a remote host:
+Run the script against a remote host, this test connectivity and try to resolve the hostname before running:
 ```
 Invoke-EDRChecker -Remote <hostname>
+Invoke-EDRChecker -Remote <hostname> -Ignore
+```
+
+To bypass the pre-checks for remote hosts use -Ignore flag to bypass connectivity checks
+```
+Invoke-EDRChecker -Remote <hostname> -Ignore
 ```
 
 ## Example Output - Note: These screenshots need updated and this has only been tested on Windows 10, more testing to come.
@@ -58,6 +64,7 @@ Using EDR-Checker with PoshC2:
 - [x] - Get currently loaded DLL's in your current process
   - [x] - Get dll metadata of currently loaded dlls
 - [x] - Add remote host query capability
-  - [ ] - Add connectivity and privilege checks before perform edr checks
+  - [x] - Add connectivity and DNS checks before performing edr checks
+  - [ ] - Add privilege checks before performing edr checks
 - [x] - Add installed services checks
 - [ ] - Port to python for unix/macos support
