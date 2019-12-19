@@ -32,7 +32,6 @@ Invoke-EDRChecker -Force
 Run the script against a remote host, this test connectivity and try to resolve the hostname before running:
 ```
 Invoke-EDRChecker -Remote <hostname>
-Invoke-EDRChecker -Remote <hostname> -Ignore
 ```
 
 To bypass the pre-checks for remote hosts use -Ignore flag to bypass connectivity checks
