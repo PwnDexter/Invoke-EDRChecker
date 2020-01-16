@@ -28,6 +28,7 @@ $edr_list = @('activeconsole',
               'endgame',
               'fireeye',
               'groundling',
+              'GRRservice'
               'inspector',
               'kaspersky',
               'lacuna',
@@ -72,7 +73,8 @@ $edr_list = @('activeconsole',
               'tpython',
               'wincollect',
               'windowssensor',
-              'wireshark'
+              'wireshark',
+              'xagt'
              )
 
 <#
