@@ -58,12 +58,12 @@ Using EDR-Checker with PoshC2:
 - [x] - Refine beta function for registry checking
   - [x] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
-- [ ] - Port to c#
+- [ ] - Port to c# - IN PROGRESS
 - [x] - Clean up output
 - [x] - Get currently loaded DLL's in your current process
   - [x] - Get dll metadata of currently loaded dlls
 - [x] - Add remote host query capability
   - [x] - Add connectivity and DNS checks before performing edr checks
-  - [ ] - Add privilege checks before performing edr checks
+  - [ ] - Add remote privilege checks before performing edr checks
 - [x] - Add installed services checks
 - [ ] - Port to python for unix/macos support
