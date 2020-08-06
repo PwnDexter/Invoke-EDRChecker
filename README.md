@@ -58,7 +58,7 @@ Using EDR-Checker with PoshC2:
 - [x] - Refine beta function for registry checking
   - [x] - Add in force reg check if not running as admin
 - [ ] - Test across more Windows and .NET versions
-- [ ] - Port to c# - IN PROGRESS
+- [x] - Port to c# - <link to repo>
 - [x] - Clean up output
 - [x] - Get currently loaded DLL's in your current process
   - [x] - Get dll metadata of currently loaded dlls
