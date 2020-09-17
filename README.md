@@ -7,6 +7,10 @@ The script also has capacity to perform checks against remote targets if you hav
 
 I will continue to add and improve the list when time permits. A full roadmap can be found below.
 
+The C# version of this tool is much improved over the PowerShell version and can be found here:
+
+https://github.com/PwnDexter/SharpEDRChecker
+
 Find me on twitter @PwnDexter for any issues or questions!
 
 ## Install
