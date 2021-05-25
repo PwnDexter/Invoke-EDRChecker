@@ -31,6 +31,7 @@ $edr_list = @('activeconsole',
               'endgame',
               'fireeye',
               'forescout',
+              'fortiedr',
               'groundling',
               'GRRservice'
               'inspector',
