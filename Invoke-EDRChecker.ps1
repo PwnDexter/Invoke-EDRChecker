@@ -1,94 +1,128 @@
 $edr_list = @('activeconsole',
-              'amsi.dll',
-              'authtap',
-              'avast',
-              'avecto',
-              'canary',
-              'carbon',
-              'cb.exe',
-              'ciscoamp',
-              'cisco amp',
-              'countertack',
-              'cramtray',
-              'crssvc',
-              'crowdstrike',
-              'csagent',
-              'csfalcon',
-              'csshell',
-              'cybereason',
-              'cyclorama',
-              'cylance',
-              'cyoptics',
-              'cyupdate',
-              'cyvera',
-              'cyserver',
-              'cytray',
-              'defendpoint',
-              'defender',
-              'eectrl',
-              'emcoreservice',
-              'emsystem',
-              'endgame',
-              'fireeye',
-              'forescout',
-              'groundling',
-              'GRRservice'
-              'inspector',
-              'ivanti',
-              'kaspersky',
-              'lacuna',
-              'logrhythm',
-              'malware',
-              'mandiant',
-              'mcafee',
-              'morphisec',
-              'msascuil',
-              'msmpeng',
-              'nissrv',
-              'ntrtscan',
-              'osquery',
-              'Palo Alto Networks',
-              'pgeposervice',
-              'pgsystemtray',
-              'privilegeguard',
-              'procwall',
-              'protectorservice'
-              'qradar',
-              'redcloak',
-              'secureconnector',
-              'secureworks',
-              'securityhealthservice',
-              'semlaunchsvc'
-              'sentinel',
-              'sepliveupdate'
-              'sisidsservice',
-              'sisipsservice',
-              'sisipsutil',
-              'smc.exe',
-              'smcgui',
-              'snac64',
-              'sophos',
-              'splunk',
-              'srtsp',
-              'symantec',
-              'symcorpui'
-              'symefasi',
-              'sysinternal',
-              'sysmon',
-              'tanium',
-              'tda.exe',
-              'tdawork',
-              'tmlisten',
-              'tmbmsrv',
-              'tmssclient',
-              'tmccsf',
-              'tpython',
-              'trend',
-              'watchdogagent',
-              'wincollect',
-              'windowssensor',
-              'wireshark',
-              'xagt'
+            'ADA-PreCheck',
+            'ahnlab',
+            'amsi.dll',
+            'anti malware',
+            'anti-malware',
+            'antimalware',
+            'anti virus',
+            'anti-virus',
+            'antivirus',
+            'appsense',
+            'attivo networks',
+            'attivonetworks',
+            'authtap',
+            'avast',
+            'avecto',
+            'bitdefender',
+            'blackberry',
+            'canary',
+            'carbonblack',
+            'carbon black',
+            'cb.exe',
+            'check point',
+            'ciscoamp',
+            'cisco amp',
+            'countercept',
+            'countertack',
+            'cramtray',
+            'crssvc',
+            'crowdstrike',
+            'csagent',
+            'csfalcon',
+            'csshell',
+            'cybereason',
+            'cyclorama',
+            'cylance',
+            'cynet',
+            'cyoptics',
+            'cyupdate',
+            'cyvera',
+            'cyserver',
+            'cytray',
+            'darktrace',
+            'deep instinct',
+            'defendpoint',
+            'defender',
+            'eectrl',
+            'elastic',
+            'endgame',
+            'f-secure',
+            'forcepoint',
+            'fortinet',
+            'fireeye',
+            'groundling',
+            'GRRservic',
+            'harfanglab',
+            'inspector',
+            'ivanti',
+            'juniper networks',
+            'kaspersky',
+            'lacuna',
+            'logrhythm',
+            'malware',
+            'malwarebytes',
+            'mandiant',
+            'mcafee',
+            'morphisec',
+            'msascuil',
+            'msmpeng',
+            'nissrv',
+            'omni',
+            'omniagent',
+            'osquery',
+            'Palo Alto Networks',
+            'pgeposervice',
+            'pgsystemtray',
+            'privilegeguard',
+            'procwall',
+            'protectorservic',
+            'qianxin',
+            'qradar',
+            'qualys',
+            'rapid7',
+            'redcloak',
+            'red canary',
+            'SanerNow',
+            'sangfor',
+            'secureworks',
+            'securityhealthservice',
+            'semlaunchsv',
+            'sentinel',
+            'sentinelone',
+            'sepliveupdat',
+            'sisidsservice',
+            'sisipsservice',
+            'sisipsutil',
+            'smc.exe',
+            'smcgui',
+            'snac64',
+            'somma',
+            'sophos',
+            'splunk',
+            'srtsp',
+            'symantec',
+            'symcorpu',
+            'symefasi',
+            'sysinternal',
+            'sysmon',
+            'tanium',
+            'tda.exe',
+            'tdawork',
+            'tehtris',
+            'threat',
+            'trellix',
+            'tpython',
+            'trend micro',
+            'uptycs',
+            'vectra',
+            'watchguard',
+            'wincollect',
+            'windowssensor',
+            'wireshark',
+            'withsecure',
+            'xagt.exe',
+            'xagtnotif.exe'
              )
 
 <#
@@ -131,7 +165,7 @@ function Invoke-EDRChecker
          )
 
     $edr = $edr_list
-        
+
     if ($Remote -eq $false)
     {
         Write-Output ""
@@ -163,7 +197,7 @@ function Invoke-EDRChecker
         if ($prog = Get-ChildItem -Path 'C:\Program Files\*' | Select-Object Name | Select-String -Pattern $edr -AllMatches)
         {ForEach ($p in $prog -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
         else {Write-Output "[+] Nothing found in Program Files"}
-    
+
         Write-Output ""
         Write-Output "[!] Checking Program Files x86"
         if ($prog86 = Get-ChildItem -Path 'C:\Program Files (x86)\*' | Select-Object Name | Select-String -Pattern $edr -AllMatches)
@@ -186,7 +220,7 @@ function Invoke-EDRChecker
         {
             Write-Output ""
             Write-Output "[!] Checking the registry"
-            if ($reg = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\*' | Select-Object PSChildName,PSPath,DisplayName,ImagePath,Description | Select-String -Pattern $edr -AllMatches) 
+            if ($reg = Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\*' | Select-Object PSChildName,PSPath,DisplayName,ImagePath,Description | Select-String -Pattern $edr -AllMatches)
             {ForEach ($p in $reg -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
             else {Write-Output "[+] Nothing found in Registry"}
         }
@@ -195,12 +229,12 @@ function Invoke-EDRChecker
         {
             Write-Output ""
             Write-Output "[!] Checking the drivers"
-            if ($drv = fltmc instances | Select-String -Pattern $edr -AllMatches) 
+            if ($drv = fltmc instances | Select-String -Pattern $edr -AllMatches)
             {ForEach ($p in $drv -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
             else {Write-Output "[+] No suspicious drivers found"}
         }
     }
-    
+
     if ($Remote -eq $true)
     {
         if ([string]::IsNullOrEmpty($ComputerName))
@@ -208,7 +242,7 @@ function Invoke-EDRChecker
 
         if ($Ignore -ne $true)
         {
-            Write-Output "" 
+            Write-Output ""
             Write-Output "[!] Checking connectivity to $ComputerName"
             $con = Test-Connection -ComputerName $ComputerName -Count 2 -Delay 2 -Quiet
             if ($con | Select-String -Pattern "False")
@@ -225,7 +259,7 @@ function Invoke-EDRChecker
         }
         elseif ($ignore -eq $true)
         {
-            Write-Output "" 
+            Write-Output ""
             Write-Output "[!] Ignoring connectivity and FQDN checks to $ComputerName, this may result in errors"
             $targ = $ComputerName
         }
@@ -251,7 +285,7 @@ function Invoke-EDRChecker
         if ($prog = Get-ChildItem -Path "\\$targ\c$\Program Files\*" | Select-Object Name | Select-String -Pattern $edr -AllMatches)
         {ForEach ($p in $prog -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
         else {Write-Output "[+] Nothing found in Program Files"}
-    
+
         Write-Output ""
         Write-Output "[!] Checking Program Files x86 on $targ"
         if ($prog86 = Get-ChildItem -Path "\\$targ\c$\Program Files (x86)\*" | Select-Object Name | Select-String -Pattern $edr -AllMatches)
@@ -263,7 +297,7 @@ function Invoke-EDRChecker
         if ($progd = Get-ChildItem -Path "\\$targ\c$\ProgramData\*" | Select-Object Name | Select-String -Pattern $edr -AllMatches)
         {ForEach ($p in $progd -Replace "@{") {Write-Output "[-] $p".Trim("}")}}
         else {Write-Output "[+] Nothing found in Program Data"}
-    
+
         Write-Output ""
         Write-Output "[!] Checking installed services on $targ"
         if ($serv = Get-Service -ComputerName $targ | Select-Object Name,DisplayName,ServiceName | Select-String -Pattern $edr -AllMatches)
